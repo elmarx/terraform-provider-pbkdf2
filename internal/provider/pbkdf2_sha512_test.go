@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/tfversion"
 )
 
-func TestExampleFunction_Known(t *testing.T) {
+func TestPbkdf2Sha512Function_Known(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
 		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
 			tfversion.SkipBelow(tfversion.Version1_8_0),
@@ -21,7 +21,7 @@ func TestExampleFunction_Known(t *testing.T) {
 			{
 				Config: `
 				output "test" {
-					value = provider::scaffolding::example("testvalue")
+					value = provider::pbkdf2::pbkdf2_sha512("testvalue")
 				}
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(
@@ -32,7 +32,7 @@ func TestExampleFunction_Known(t *testing.T) {
 	})
 }
 
-func TestExampleFunction_Null(t *testing.T) {
+func TestPbkdf2Sha512Function_Null(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
 		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
 			tfversion.SkipBelow(tfversion.Version1_8_0),
@@ -42,36 +42,11 @@ func TestExampleFunction_Null(t *testing.T) {
 			{
 				Config: `
 				output "test" {
-					value = provider::scaffolding::example(null)
+					value = provider::pbkdf2::pbkdf2_sha512(null)
 				}
 				`,
 				// The parameter does not enable AllowNullValue
 				ExpectError: regexp.MustCompile(`argument must not be null`),
-			},
-		},
-	})
-}
-
-func TestExampleFunction_Unknown(t *testing.T) {
-	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(tfversion.Version1_8_0),
-		},
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
-		Steps: []resource.TestStep{
-			{
-				Config: `
-				resource "terraform_data" "test" {
-					input = "testvalue"
-				}
-				
-				output "test" {
-					value = provider::scaffolding::example(terraform_data.test.output)
-				}
-				`,
-				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckOutput("test", "testvalue"),
-				),
 			},
 		},
 	})

@@ -10,20 +10,20 @@ import (
 )
 
 var (
-	_ function.Function = ExampleFunction{}
+	_ function.Function = Pbkdf2Sha512Function{}
 )
 
-func NewExampleFunction() function.Function {
-	return ExampleFunction{}
+func NewPbkdf2Sha512Function() function.Function {
+	return Pbkdf2Sha512Function{}
 }
 
-type ExampleFunction struct{}
+type Pbkdf2Sha512Function struct{}
 
-func (r ExampleFunction) Metadata(_ context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
-	resp.Name = "example"
+func (r Pbkdf2Sha512Function) Metadata(_ context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+	resp.Name = "pbkdf2_sha512"
 }
 
-func (r ExampleFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (r Pbkdf2Sha512Function) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Example function",
 		MarkdownDescription: "Echoes given argument as result",
@@ -37,7 +37,7 @@ func (r ExampleFunction) Definition(_ context.Context, _ function.DefinitionRequ
 	}
 }
 
-func (r ExampleFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (r Pbkdf2Sha512Function) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var data string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &data))
